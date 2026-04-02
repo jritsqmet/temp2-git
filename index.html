@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Echoes of Fear | Classic Horror Games Archive</title>
+  <!-- Google Fonts for eerie & modern vibe -->
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 30%, #0a0808 0%, #030101 100%);
+      font-family: 'Inter', sans-serif;
+      color: #ece8e2;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* ---------- SCALABLE NAVBAR (flexible, future-ready) ---------- */
+    .navbar {
+      background: rgba(10, 8, 12, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(180, 40, 40, 0.4);
+      padding: 0.9rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.2s ease;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Logo / brand (scalable text) */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Creepster', cursive;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #c72a2a, #8b3c1c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 6px rgba(180, 40, 40, 0.3);
+      transition: transform 0.2s;
+    }
+    .logo i {
+      color: #b32b2b;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: #c92c2c;
+      text-shadow: 0 0 4px #3a0707;
+      font-size: 1.7rem;
+    }
+    .logo:hover {
+      transform: scale(1.02);
+    }
+
+    /* Navigation links - scalable, easy to add more pages */
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #f0e6db;
+      padding: 0.5rem 0.2rem;
+      transition: all 0.25s;
+      position: relative;
+      letter-spacing: 0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links li a i {
+      font-size: 1rem;
+      color: #c95a3a;
+      transition: color 0.2s;
+    }
+
+    /* Hover underline effect + blood-like accent */
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #d64531;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-links li a:hover {
+      color: #ffaa7a;
+    }
+
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links li a:hover i {
+      color: #e06c4a;
+    }
+
+    /* Active page simulation (just for home) - scalable */
+    .nav-links li a.active {
+      color: #ff9570;
+      border-bottom: 2px solid #d64531;
+    }
+    .nav-links li a.active i {
+      color: #e6572e;
+    }
+
+    /* Mobile responsive - hamburger menu (future-friendly) */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      color: #f0cfb0;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    /* ---------- MAIN CONTENT (horror game showcase) ---------- */
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      background: rgba(0, 0, 0, 0.45);
+      margin-bottom: 2rem;
+      border-bottom: 1px dashed #551a1a;
+    }
+    .hero h1 {
+      font-family: 'Creepster', cursive;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: #dd5f3a;
+      text-shadow: 4px 4px 0px #2b0c0c;
+      letter-spacing: 2px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 1rem auto 0;
+      color: #cebcac;
+    }
+
+    .games-grid {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    /* horror card style */
+    .game-card {
+      background: rgba(18, 14, 14, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid rgba(180, 60, 40, 0.5);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 12px 20px -12px rgba(0,0,0,0.6);
+    }
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: #bb4a2e;
+      box-shadow: 0 20px 28px -12px #2c0404;
+      background: rgba(30, 20, 20, 0.8);
+    }
+    .card-img {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+    }
+    /* overlayed vintage filter */
+    .card-img::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7));
+      pointer-events: none;
+    }
+    .card-content {
+      padding: 1.3rem;
+    }
+    .game-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: 'Creepster', cursive;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+      color: #f0a77a;
+    }
+    .game-year {
+      display: inline-block;
+      background: #2f1610;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.8rem;
+      color: #dfa27b;
+    }
+    .game-desc {
+      font-size: 0.9rem;
+      color: #cfc2b6;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+    .btn-tomb {
+      background: none;
+      border: 1px solid #af4c2e;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #e6bc9a;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-tomb:hover {
+      background: #631e0e;
+      border-color: #d85a36;
+      color: white;
+    }
+
+    /* footer (just a placeholder) */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #3c1b13;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #8e7668;
+    }
+
+    /* responsive scaling for navbar and future pages */
+    @media (max-width: 780px) {
+      .nav-container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        max-width: 280px;
+        height: calc(100vh - 70px);
+        background: #0c0808e6;
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem 1.5rem;
+        gap: 1.8rem;
+        transition: left 0.3s ease;
+        border-right: 2px solid #76271a;
+        box-shadow: 8px 0 20px rgba(0,0,0,0.6);
+        z-index: 999;
+      }
+      .nav-links.active {
+        left: 0;
+      }
+      .nav-links li a {
+        font-size: 1.3rem;
+        width: 100%;
+      }
+      .navbar {
+        padding: 0.7rem 1.2rem;
+      }
+      .logo {
+        font-size: 1.5rem;
+      }
+    }
+
+    /* small screens fine-tuning */
+    @media (max-width: 480px) {
+      .games-grid {
+        gap: 1.2rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    /* extra utility */
+    .coming-soon-tag {
+      background: #30100a;
+      border-radius: 20px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.7rem;
+      margin-left: 6px;
+      font-weight: normal;
+      color: #e9a97a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCALABLE NAVBAR: ready for extra pages (classic horror games theme) -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i class="fas fa-skull"></i>
+        <span>ECHOES of FEAR</span>
+      </div>
+      <button class="menu-toggle" id="mobileMenuBtn" aria-label="Menu">
+        <i class="fas fa-bone"></i> <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <!-- current active page (home) -->
+        <li><a href="#" class="active" id="homeLink"><i class="fas fa-home"></i> Cursed Crypt</a></li>
+        <!-- future pages: just uncomment or add more <li> items -->
+        <li><a href="#" id="gamesLink"><i class="fas fa-ghost"></i> Tombs <span class="coming-soon-tag">soon</span></a></li>
+        <li><a href="#" id="rankingLink"><i class="fas fa-trophy"></i> Nightmare Rank</a></li>
+        <li><a href="#" id="libraryLink"><i class="fas fa-book-dead"></i> Occult Library</a></li>
+        <!-- This navbar scales horizontally on desktop, collapses on mobile. Add more items easily -->
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <h1><i class="fas fa-dragon"></i> CLASSIC TERROR</h1>
+      <p>Relive the golden age of survival horror — where fear had no saves, corridors whispered secrets, and every shadow was alive.</p>
+    </div>
+
+    <section class="games-grid" id="gamesGrid">
+      <!-- Classic horror game cards (static but can be extended with JS/dynamic) -->
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/1e0f0c/8b3a2a?text=Silent+Hill'); background-size: cover;">
+          <!-- retro pixel effect: just placeholder, but looks like a foggy town -->
+        </div>
+        <div class="card-content">
+          <div class="game-title">SILENT HILL</div>
+          <div class="game-year">1999 · PS1</div>
+          <div class="game-desc">Fog-drenched psychological horror where a father searches for his adopted daughter in a nightmarish town consumed by cults and guilt.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-eye"></i> Unearth memory</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/24110c/9b3f20?text=Resident+Evil'); background-size: cover;"></div>
+        <div class="card-content">
+          <div class="game-title">RESIDENT EVIL</div>
+          <div class="game-year">1996 · PS1</div>
+          <div class="game-desc">The survival-horror pioneer. Explore Spencer Mansion, manage scarce ammo, and uncover the Umbrella conspiracy. Classic fixed-camera dread.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-skull-crossbones"></i> Enter mansion</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/1f130e/88462c?text=Alone+In+The+Dark'); background-size: cover;"></div>
+        <div class="card-content">
+          <div class="game-title">ALONE IN THE DARK</div>
+          <div class="game-year">1992 · PC</div>
+          <div class="game-desc">The true grandfather of 3D survival horror. Investigate Derceto Manor, battle Lovecraftian creatures, and solve eerie puzzles.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-candle"></i> Light a match</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/1f1210/994224?text=Fatal+Frame'); background-size: cover;"></div>
+        <div class="card-content">
+          <div class="game-title">FATAL FRAME</div>
+          <div class="game-year">2001 · PS2</div>
+          <div class="game-desc">Defeat vengeful ghosts with the Camera Obscura. Japanese horror at its most tragic and terrifying. Atmosphere beyond compare.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-camera-retro"></i> Capture spirit</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/2d1a14/ac4930?text=Clock+Tower'); background-size: cover;"></div>
+        <div class="card-content">
+          <div class="game-title">CLOCK TOWER</div>
+          <div class="game-year">1995 · SNES</div>
+          <div class="game-desc">Point-and-click terror where a giant scissor-wielding man stalks you. Multiple endings and pure panic hide-and-seek mechanics.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-cut"></i> Hide!</button>
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/1f130f/8a3f2c?text=Rule+of+Rose'); background-size: cover;"></div>
+        <div class="card-content">
+          <div class="game-title">RULE OF ROSE</div>
+          <div class="game-year">2006 · PS2</div>
+          <div class="game-desc">Disturbing psychological fairy tale. Aboard an airship, a young woman faces a cruel aristocracy of children. Deeply unsettling.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-rose"></i> Unlock mystery</button>
+        </div>
+      </div>
+    </section>
+
+    <div style="text-align: center; margin: 0 1rem;">
+      <div style="background: #1f0d0a30; backdrop-filter: blur(3px); border-radius: 60px; padding: 0.6rem 1.2rem; display: inline-block;">
+        <i class="fas fa-hourglass-half"></i> More cursed titles & rankings coming with future updates. <i class="fas fa-skull"></i>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p><i class="fas fa-tape"></i> Echoes of Fear — preserving the legacy of classic survival horror. Expandable navbar for upcoming sections: reviews, forums, bestiary.</p>
+    <p style="margin-top: 10px;">© 2025 | Unearthed from the vault of nightmares</p>
+  </footer>
+
+  <script>
+    // ---------- SCALABLE: Dynamic future pages warning + navigation simulation ----------
+    // This script handles mobile menu toggling, and shows future page placeholders.
+    // The navbar can easily have more <li> items added; they will automatically scale.
+    // For future full integration, just change window.location or build SPA routes.
+
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const menuIcon = mobileBtn?.querySelector('i.fa-bars'); // optional
+
+    // Toggle mobile navigation
+    if (mobileBtn && navLinks) {
+      mobileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navLinks.classList.toggle('active');
+        // Change icon feel (optional)
+        const iconBars = mobileBtn.querySelector('.fa-bars');
+        const iconBone = mobileBtn.querySelector('.fa-bone');
+        if (navLinks.classList.contains('active')) {
+          if (iconBars) iconBars.style.opacity = '0.7';
+        } else {
+          if (iconBars) iconBars.style.opacity = '1';
+        }
+      });
+    }
+
+    // Close mobile menu when clicking on a nav link (better UX)
+    const allNavAnchors = document.querySelectorAll('.nav-links a');
+    allNavAnchors.forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        // if menu is open, close it
+        if (navLinks && navLinks.classList.contains('active')) {
+          navLinks.classList.remove('active');
+        }
+        // Prevent default for future pages that are not ready, but keep demo smooth.
+        // we let the link show an alert for non-home sections (scalable pattern)
+        const href = anchor.getAttribute('href');
+        // if it's just "#" and not the active home link, we show coming soon alert for demo purpose.
+        // But we avoid interfering with future real routing.
+        if (anchor.id !== 'homeLink' && (href === '#' || href === '#' || anchor.getAttribute('href') === '#')) {
+          e.preventDefault();
+          showComingSoon(anchor.innerText.trim());
+        } else if (anchor.id === 'homeLink') {
+          // home already active, but we can scroll to top or just reload nothing.
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          // set active style properly
+          updateActiveLink(anchor);
+        } else {
+          // if any anchor points to real pages (future development) we keep default behavior.
+          // for now if it's not home & not #? avoid strange jumps.
+          if (href === '#') {
+            e.preventDefault();
+            showComingSoon(anchor.innerText.trim());
+          } else {
+            // let the link work normally in future when pages exist.
+            // but we still ensure active class removal simulation
+            updateActiveLink(anchor);
+          }
+        }
+      });
+    });
+
+    // helper to show a stylish "coming soon" popup (non-intrusive)
+    function showComingSoon(sectionName = 'this section') {
+      // create temporary toast message
+      const toast = document.createElement('div');
+      toast.innerText = `⚠️ The Nightmare Awakens Later — "${sectionName || 'This page'}" is under construction. More classic horror soon! ⚠️`;
+      toast.style.position = 'fixed';
+      toast.style.bottom = '20px';
+      toast.style.left = '20px';
+      toast.style.right = '20px';
+      toast.style.maxWidth = '400px';
+      toast.style.background = '#1f0b07dd';
+      toast.style.backdropFilter = 'blur(12px)';
+      toast.style.color = '#ffcdb0';
+      toast.style.borderLeft = '5px solid #bf3a1c';
+      toast.style.padding = '12px 20px';
+      toast.style.borderRadius = '36px';
+      toast.style.fontWeight = '500';
+      toast.style.fontSize = '0.9rem';
+      toast.style.zIndex = '9999';
+      toast.style.fontFamily = "'Inter', sans-serif";
+      toast.style.boxShadow = '0 8px 20px black';
+      toast.style.backdropFilter = 'blur(8px)';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.5s';
+        setTimeout(() => toast.remove(), 500);
+      }, 2800);
+    }
+
+    // update active link in navbar (so we simulate proper active state)
+    function updateActiveLink(clickedAnchor) {
+      // remove active class from all nav links
+      allNavAnchors.forEach(link => {
+        link.classList.remove('active');
+      });
+      clickedAnchor.classList.add('active');
+      // also update any additional styling if needed
+    }
+
+    // Optional: If any user clicks "Unearth memory" etc, same coming soon message
+    window.showComingSoon = showComingSoon; // make global for inline buttons
+
+    // Add extra scaling for future pages: the navbar already can contain many items, no extra code needed.
+    // Also, close mobile nav on window resize if needed (avoid stuck open)
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 780 && navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // small easter egg: click on logo does a little spooky effect (fun)
+    const logoElem = document.querySelector('.logo');
+    if (logoElem) {
+      logoElem.addEventListener('click', () => {
+        const spookySoundMsg = document.createElement('div');
+        spookySoundMsg.innerText = '👻 "You hear a distant whisper... soon more nightmares will rise" 👻';
+        spookySoundMsg.style.position = 'fixed';
+        spookySoundMsg.style.bottom = '80px';
+        spookySoundMsg.style.right = '20px';
+        spookySoundMsg.style.backgroundColor = '#000000aa';
+        spookySoundMsg.style.padding = '8px 15px';
+        spookySoundMsg.style.borderRadius = '30px';
+        spookySoundMsg.style.fontSize = '0.8rem';
+        spookySoundMsg.style.backdropFilter = 'blur(5px)';
+        spookySoundMsg.style.border = '1px solid #ab4a2c';
+        spookySoundMsg.style.zIndex = '2000';
+        document.body.appendChild(spookySoundMsg);
+        setTimeout(() => spookySoundMsg.remove(), 1800);
+      });
+    }
+  </script>
+</body>
+</html>
