@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NIGHTMARE LIBRARY | Classic Horror Games Database</title>
+  <!-- Google Fonts: Eerie & Modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, #0a0507 0%, #010101 100%);
+      font-family: 'Inter', sans-serif;
+      color: #f0e5da;
+      line-height: 1.5;
+    }
+
+    /* ========== SCALABLE NAVBAR (Classic Horror Library) ========== */
+    .navbar {
+      background: rgba(8, 5, 7, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #8b2c1c;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: 0.2s;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: 'Creepster', cursive;
+      font-size: 1.9rem;
+      background: linear-gradient(135deg, #cf4a2c, #a12c18);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1.5px;
+    }
+    .logo i {
+      color: #bc3f20;
+      background: none;
+      -webkit-background-clip: unset;
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #e7cfbc;
+      padding: 0.4rem 0;
+      transition: 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links li a i {
+      color: #bc5a3a;
+      font-size: 0.95rem;
+    }
+
+    .nav-links li a:hover, .nav-links li a.active {
+      color: #ffa267;
+      border-bottom-color: #c53f1f;
+    }
+
+    /* Mobile responsive */
+    .menu-toggle {
+      display: none;
+      font-size: 1.7rem;
+      background: none;
+      border: none;
+      color: #e7b28e;
+      cursor: pointer;
+    }
+
+    @media (max-width: 780px) {
+      .nav-container {
+        flex-direction: row;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .nav-links {
+        position: fixed;
+        top: 75px;
+        left: -100%;
+        width: 75%;
+        max-width: 280px;
+        height: calc(100vh - 75px);
+        background: #0a0505f2;
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 2rem 1.8rem;
+        gap: 1.8rem;
+        transition: left 0.3s ease;
+        border-right: 2px solid #742812;
+        z-index: 999;
+      }
+      .nav-links.active {
+        left: 0;
+      }
+      .navbar {
+        padding: 0.8rem 1.2rem;
+      }
+    }
+
+    /* Library header */
+    .library-header {
+      text-align: center;
+      padding: 2.5rem 1rem 1.8rem;
+      background: rgba(0,0,0,0.4);
+      border-bottom: 1px dashed #712e1c;
+    }
+    .library-header h1 {
+      font-family: 'Creepster', cursive;
+      font-size: clamp(2.3rem, 8vw, 4rem);
+      color: #e26942;
+      text-shadow: 3px 3px 0 #2c0a04;
+    }
+    .library-header p {
+      max-width: 700px;
+      margin: 0.8rem auto 0;
+      color: #cfbcae;
+      font-size: 1.1rem;
+    }
+
+    /* Search + filter section */
+    .search-section {
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .search-box {
+      flex: 2;
+      min-width: 200px;
+      background: #1f1310b3;
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      padding: 0.3rem 1rem;
+      display: flex;
+      align-items: center;
+      border: 1px solid #95442a;
+    }
+    .search-box i {
+      color: #b75333;
+      font-size: 1.2rem;
+      margin-right: 8px;
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      padding: 0.8rem 0.2rem;
+      width: 100%;
+      color: #f2dfcf;
+      font-size: 1rem;
+      outline: none;
+    }
+    .search-box input::placeholder {
+      color: #ab8b78;
+    }
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .filter-btn {
+      background: #24120cb3;
+      border: 1px solid #95442a;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      color: #f2cfb3;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #872f1a;
+      border-color: #dc6e48;
+      color: white;
+    }
+    .stats {
+      font-size: 0.85rem;
+      background: #00000066;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+    }
+
+    /* Game Grid Library */
+    .library-grid {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 1.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Horror Game Card (expanded style) */
+    .horror-card {
+      background: linear-gradient(145deg, #1f1412c9, #120b09b3);
+      backdrop-filter: blur(4px);
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid #7f3e2a;
+      transition: all 0.3s ease;
+      box-shadow: 0 15px 25px -12px black;
+      display: flex;
+      flex-direction: column;
+    }
+    .horror-card:hover {
+      transform: translateY(-8px);
+      border-color: #bd5a38;
+      box-shadow: 0 25px 30px -12px #2c0600;
+      background: #2f1914c9;
+    }
+    .card-media {
+      height: 210px;
+      background-size: cover;
+      background-position: center 30%;
+      position: relative;
+    }
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #0c0301cc;
+      backdrop-filter: blur(4px);
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #ffb085;
+      border-left: 2px solid #c5451f;
+      font-family: monospace;
+    }
+    .card-content {
+      padding: 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-title {
+      font-family: 'Creepster', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 1px;
+      color: #f0a177;
+      margin-bottom: 0.3rem;
+    }
+    .game-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.5rem 0 0.8rem;
+      font-size: 0.8rem;
+      color: #dab39b;
+    }
+    .year, .platform {
+      background: #24100b80;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+    }
+    .desc {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: #dfcdbe;
+      margin-bottom: 1.2rem;
+      flex: 1;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    .horror-tag {
+      font-size: 0.7rem;
+      background: #361c14;
+      padding: 0.2rem 0.7rem;
+      border-radius: 20px;
+      color: #eba26e;
+    }
+    .btn-dread {
+      background: none;
+      border: 1px solid #b94a28;
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #e7b590;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-dread:hover {
+      background: #812e16;
+      color: white;
+      border-color: #e07a52;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #441f14;
+      color: #9c7b6b;
+      font-size: 0.8rem;
+    }
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      background: #1d0c08a0;
+      border-radius: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- SCALABLE NAVBAR: Classic Horror Library -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <i class="fas fa-dungeon"></i>
+      <span>NIGHTMARE LIBRARY</span>
+    </div>
+    <button class="menu-toggle" id="mobileToggle"><i class="fas fa-skull"></i> <i class="fas fa-bars"></i></button>
+    <ul class="nav-links" id="navMenu">
+      <li><a href="index.html" class="active" id="libLink"><i class="fas fa-book-dead"></i> Grimoire</a></li>
+      <li><a href="#" id="futureRank"><i class="fas fa-trophy"></i> Hall of Terror</a></li>
+      <li><a href="#" id="futureBestiary"><i class="fas fa-paw"></i> Bestiary</a></li>
+      <li><a href="#" id="futureShrine"><i class="fas fa-candle"></i> Occult Shrine</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="library-header">
+    <h1><i class="fas fa-ghost"></i> LIBRARY OF THE DAMNED</h1>
+    <p>Explore the most iconic classic survival horror games — from fixed-camera nightmares to psychological dread.</p>
+  </div>
+
+  <div class="search-section">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search by title, year, or theme... (e.g., Silent, Resident, 1999)">
+    </div>
+    <div class="filter-buttons" id="filterContainer">
+      <button class="filter-btn active" data-filter="all"><i class="fas fa-skull"></i> All Terrors</button>
+      <button class="filter-btn" data-filter="ps1"><i class="fab fa-playstation"></i> PS1 Era</button>
+      <button class="filter-btn" data-filter="ps2"><i class="fab fa-playstation"></i> PS2 Classics</button>
+      <button class="filter-btn" data-filter="pc"><i class="fas fa-desktop"></i> PC / Retro</button>
+      <button class="filter-btn" data-filter="psychological"><i class="fas fa-brain"></i> Psychological</button>
+    </div>
+    <div class="stats" id="gameStats">loading nightmares...</div>
+  </div>
+
+  <div class="library-grid" id="gamesLibraryGrid">
+    <!-- Cards will be dynamically injected via JS (classic horror games dataset) -->
+  </div>
+</main>
+
+<footer>
+  <i class="fas fa-tape"></i> The Nightmare Library — constantly expanding. New entries from forgotten tombs added each moon cycle.
+  <br>© 2025 | Cult of Classic Horror
+</footer>
+
+<script>
+  // ---------- CLASSIC HORROR GAMES DATABASE (LIBRARY) ----------
+  const classicHorrorGames = [
+    { id: 1, title: "Silent Hill", year: 1999, platform: "ps1", genre: "Psychological", description: "Fog-drenched town, cult secrets, and a father's desperate search for his adopted daughter. Masterpiece of dread.", imageLabel: "silent-hill", tags: ["psychological","survival"], icon: "fa-fog" },
+    { id: 2, title: "Resident Evil", year: 1996, platform: "ps1", genre: "Survival", description: "Spencer Mansion, zombies, limited ammo, and the origin of survival horror. Classic fixed-camera terror.", imageLabel: "resident-evil", tags: ["zombies","action"] },
+    { id: 3, title: "Resident Evil 2", year: 1998, platform: "ps1", genre: "Survival", description: "Raccoon City outbreak, dual scenarios, and the relentless Mr. X. Perfected the classic formula.", imageLabel: "re2" },
+    { id: 4, title: "Silent Hill 2", year: 2001, platform: "ps2", genre: "Psychological", description: "A tortured man receives a letter from his dead wife. Explore guilt, monsters, and the iconic Pyramid Head.", imageLabel: "sh2", tags: ["psychological","masterpiece"] },
+    { id: 5, title: "Fatal Frame", year: 2001, platform: "ps2", genre: "Psychological", description: "Camera Obscura combats vengeful ghosts. Japanese horror steeped in folklore and tragic rituals.", imageLabel: "fatal-frame" },
+    { id: 6, title: "Alone in the Dark", year: 1992, platform: "pc", genre: "Survival", description: "The 3D survival horror pioneer. Investigate Derceto Manor and fight Lovecraftian creatures.", imageLabel: "alone-dark" },
+    { id: 7, title: "Clock Tower", year: 1995, platform: "ps1", genre: "Psychological", description: "Scissorman stalks you in point-and-click terror. Multiple endings and pure panic.", imageLabel: "clock-tower" },
+    { id: 8, title: "Rule of Rose", year: 2006, platform: "ps2", genre: "Psychological", description: "Disturbing fairy tale on an airship, cruel children, and a haunting narrative about class and trauma.", imageLabel: "rule-rose" },
+    { id: 9, title: "Eternal Darkness", year: 2002, platform: "ps2", genre: "Psychological", description: "Sanity effects that break the fourth wall. Lovecraftian horror across centuries.", imageLabel: "eternal-darkness" },
+    { id: 10, title: "Siren", year: 2003, platform: "ps2", genre: "Survival", description: "Sightjacking mechanic, undead Shibito, and a cryptic non-linear story in a cursed Japanese village.", imageLabel: "siren" },
+    { id: 11, title: "Parasite Eve", year: 1998, platform: "ps1", genre: "Survival", description: "Cinematic horror-RPG with mitochondria mutations and a chilling opera house scene.", imageLabel: "parasite-eve" },
+    { id: 12, title: "Dino Crisis", year: 1999, platform: "ps1", genre: "Survival", description: "Resident Evil with dinosaurs. Tense corridors, smart raptors, and sci-fi horror.", imageLabel: "dino-crisis" }
+  ];
+
+  // Helper to get placeholder image with game title overlay (retro style)
+  function getGameImage(title) {
+    // Using dynamic placeholder with colors & titles to reflect theme, no external needed.
+    const colors = ["1f130f","2c1812","26100c","301a12","1f0e09"];
+    const hash = title.length;
+    const color = colors[hash % colors.length];
+    const encodedTitle = encodeURIComponent(title);
+    return `https://placehold.co/600x400/${color}/7a3520?text=${encodedTitle.replace(/%20/g,'+')}`;
+  }
+
+  // Render library with filters
+  let currentFilter = "all";
+  let currentSearch = "";
+
+  const gridContainer = document.getElementById('gamesLibraryGrid');
+  const searchInput = document.getElementById('searchInput');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const statsSpan = document.getElementById('gameStats');
+
+  function filterAndRender() {
+    let filtered = [...classicHorrorGames];
+
+    // Filter by platform / genre logic using data-filter tags
+    if (currentFilter !== "all") {
+      if (currentFilter === "ps1") filtered = filtered.filter(g => g.platform === "ps1");
+      else if (currentFilter === "ps2") filtered = filtered.filter(g => g.platform === "ps2");
+      else if (currentFilter === "pc") filtered = filtered.filter(g => g.platform === "pc");
+      else if (currentFilter === "psychological") filtered = filtered.filter(g => g.genre === "Psychological" || g.tags?.includes("psychological"));
+    }
+
+    // Search (title, year, description)
+    if (currentSearch.trim() !== "") {
+      const query = currentSearch.trim().toLowerCase();
+      filtered = filtered.filter(game => 
+        game.title.toLowerCase().includes(query) ||
+        game.year.toString().includes(query) ||
+        game.description.toLowerCase().includes(query) ||
+        (game.genre && game.genre.toLowerCase().includes(query))
+      );
+    }
+
+    statsSpan.innerText = `📜 ${filtered.length} cursed entries found`;
+    if (filtered.length === 0) {
+      gridContainer.innerHTML = `<div class="no-results"><i class="fas fa-skull-crossbones"></i> No forbidden texts match your search... try a different nightmare keyword.</div>`;
+      return;
+    }
+
+    gridContainer.innerHTML = filtered.map(game => `
+      <div class="horror-card" data-id="${game.id}">
+        <div class="card-media" style="background-image: linear-gradient(0deg, #0b0503bb, #130b09a0), url('${getGameImage(game.title)}'); background-size: cover;">
+          <div class="card-badge"><i class="fas fa-tombstone"></i> ${game.genre || "Horror"}</div>
+        </div>
+        <div class="card-content">
+          <div class="game-title">${game.title}</div>
+          <div class="game-meta">
+            <span class="year"><i class="far fa-calendar-alt"></i> ${game.year}</span>
+            <span class="platform"><i class="fas ${game.platform === 'ps1' ? 'fa-playstation' : game.platform === 'ps2' ? 'fa-playstation' : 'fa-desktop'}"></i> ${game.platform.toUpperCase()}</span>
+          </div>
+          <div class="desc">${game.description}</div>
+          <div class="card-footer">
+            <span class="horror-tag"><i class="fas fa-eye"></i> Classic Terror</span>
+            <button class="btn-dread" onclick="showLibraryDetails('${game.title.replace(/'/g, "\\'")}')"><i class="fas fa-scroll"></i> Study</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Global function for "Study" button (future-proof)
+  window.showLibraryDetails = (title) => {
+    const toastMsg = document.createElement('div');
+    toastMsg.innerHTML = `📖 You open the grimoire of "${title}" — more lore, walkthroughs & eerie details coming in future updates. 🕯️`;
+    toastMsg.style.position = 'fixed';
+    toastMsg.style.bottom = '20px';
+    toastMsg.style.left = '20px';
+    toastMsg.style.right = '20px';
+    toastMsg.style.maxWidth = '400px';
+    toastMsg.style.background = '#2c1610e6';
+    toastMsg.style.backdropFilter = 'blur(12px)';
+    toastMsg.style.padding = '12px 20px';
+    toastMsg.style.borderRadius = '28px';
+    toastMsg.style.borderLeft = '4px solid #c24523';
+    toastMsg.style.fontSize = '0.85rem';
+    toastMsg.style.zIndex = '9999';
+    toastMsg.style.color = '#ffdec2';
+    document.body.appendChild(toastMsg);
+    setTimeout(() => {
+      toastMsg.style.opacity = '0';
+      toastMsg.style.transition = '0.3s';
+      setTimeout(() => toastMsg.remove(), 500);
+    }, 2800);
+  };
+
+  // Event listeners for search & filter
+  searchInput.addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    filterAndRender();
+  });
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.getAttribute('data-filter');
+      filterAndRender();
+    });
+  });
+
+  // Mobile navbar toggle
+  const mobileToggle = document.getElementById('mobileToggle');
+  const navMenu = document.getElementById('navMenu');
+  if (mobileToggle && navMenu) {
+    mobileToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+    // close when clicking on any link inside mobile
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('active')) navMenu.classList.remove('active');
+        // future pages placeholder alert (except active lib)
+        if (link.id !== 'libLink' && link.getAttribute('href') === '#') {
+          e.preventDefault();
+          window.showLibraryDetails(`the "${link.innerText.trim()}" section`);
+        } else if (link.id === 'libLink') {
+          e.preventDefault();
+          // already in library
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          if (link.getAttribute('href') === '#') e.preventDefault();
+        }
+      });
+    });
+  } else {
+    // fallback
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        if (link.id !== 'libLink' && link.getAttribute('href') === '#') {
+          e.preventDefault();
+          window.showLibraryDetails(`the "${link.innerText.trim()}" page`);
+        } else if (link.id === 'libLink') e.preventDefault();
+      });
+    });
+  }
+
+  // Close mobile nav on resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 780 && navMenu && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+    }
+  });
+
+  // initial render
+  filterAndRender();
+</script>
+</body>
+</html>
