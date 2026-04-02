@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>NIGHTMARE RANK | Classic Horror Games Hall of Terror</title>
+  <!-- Google Fonts: Horror + modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 10%, #0c0608 0%, #020001 100%);
+      font-family: 'Inter', sans-serif;
+      color: #f0e2d4;
+      line-height: 1.5;
+    }
+
+    /* ---------- SCALABLE NAVBAR ---------- */
+    .navbar {
+      background: rgba(8, 4, 6, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px solid #952e18;
+      padding: 0.9rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: 'Creepster', cursive;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #e05a32, #a1280f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo i {
+      color: #c93f1e;
+      font-size: 1.7rem;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #e7cfbc;
+      padding: 0.4rem 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .nav-links li a i {
+      color: #c25836;
+    }
+
+    .nav-links li a:hover, .nav-links li a.active {
+      color: #ffa267;
+      border-bottom-color: #d8431e;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.7rem;
+      background: none;
+      border: none;
+      color: #e7b28e;
+      cursor: pointer;
+    }
+
+    @media (max-width: 780px) {
+      .nav-container {
+        flex-direction: row;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .nav-links {
+        position: fixed;
+        top: 72px;
+        left: -100%;
+        width: 75%;
+        max-width: 280px;
+        height: calc(100vh - 72px);
+        background: #0a0505f2;
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 2rem 1.8rem;
+        gap: 1.8rem;
+        transition: left 0.3s ease;
+        border-right: 2px solid #872c18;
+        z-index: 999;
+      }
+      .nav-links.active {
+        left: 0;
+      }
+      .navbar {
+        padding: 0.7rem 1.2rem;
+      }
+    }
+
+    /* Page header */
+    .rank-header {
+      text-align: center;
+      padding: 2rem 1rem 1.5rem;
+      background: rgba(0, 0, 0, 0.55);
+      border-bottom: 1px solid #602818;
+    }
+    .rank-header h1 {
+      font-family: 'Creepster', cursive;
+      font-size: clamp(2.5rem, 8vw, 4.3rem);
+      color: #e06a42;
+      text-shadow: 4px 4px 0 #2c0a02;
+    }
+    .rank-header p {
+      max-width: 700px;
+      margin: 0.8rem auto 0;
+      color: #ccb7a8;
+    }
+
+    /* control panel */
+    .rank-controls {
+      max-width: 1300px;
+      margin: 2rem auto 1rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .sort-buttons {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .sort-btn {
+      background: #1f110db3;
+      border: 1px solid #9b422a;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      color: #f2cfb3;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sort-btn.active, .sort-btn:hover {
+      background: #962f17;
+      border-color: #e5744c;
+      color: white;
+    }
+    .reset-rank {
+      background: #2c1410;
+      border: 1px solid #ad4327;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .reset-rank:hover {
+      background: #631e0e;
+    }
+
+    /* ranking table / grid */
+    .rank-grid {
+      max-width: 1300px;
+      margin: 1.5rem auto 3rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .rank-item {
+      background: linear-gradient(95deg, #1c100db3, #120907b3);
+      backdrop-filter: blur(4px);
+      border-radius: 2rem;
+      border: 1px solid #7a3a26;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s;
+      gap: 1rem;
+    }
+    .rank-item:hover {
+      transform: scale(1.01);
+      border-color: #bc5436;
+      background: #281714c9;
+      box-shadow: 0 10px 20px -8px black;
+    }
+    .rank-number {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'Creepster', cursive;
+      min-width: 65px;
+      text-align: center;
+      color: #dd744e;
+      text-shadow: 2px 2px 0 #2c0b03;
+    }
+    .game-info {
+      flex: 3;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .game-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .game-name i {
+      font-size: 1.2rem;
+      color: #bc5838;
+    }
+    .game-detail {
+      font-size: 0.75rem;
+      color: #c7a68f;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .score-area {
+      min-width: 140px;
+      text-align: center;
+    }
+    .dread-score {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffa066;
+      letter-spacing: 1px;
+    }
+    .votes-count {
+      font-size: 0.7rem;
+      color: #b9927a;
+    }
+    .vote-buttons {
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+    }
+    .vote-btn {
+      background: #2e1913;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 60px;
+      color: #f0bfa0;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #aa4a2c;
+    }
+    .vote-btn.up:hover {
+      background: #6f2a16;
+      color: #ffd4b0;
+      transform: scale(1.05);
+    }
+    .vote-btn.down:hover {
+      background: #441a10;
+      color: #ffad82;
+    }
+    .vote-btn:active {
+      transform: scale(0.96);
+    }
+
+    @media (max-width: 750px) {
+      .rank-item {
+        flex-direction: column;
+        text-align: center;
+      }
+      .vote-buttons {
+        justify-content: center;
+      }
+      .rank-number {
+        font-size: 1.8rem;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #4c2418;
+      font-size: 0.8rem;
+      color: #9c7b6b;
+    }
+    .toast-message {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #24100ce6;
+      backdrop-filter: blur(12px);
+      padding: 10px 20px;
+      border-radius: 40px;
+      border-left: 4px solid #e2582e;
+      font-size: 0.85rem;
+      z-index: 9999;
+      color: #ffdec2;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR (SCALABLE for future pages) -->
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <i class="fas fa-crown"></i>
+      <span>NIGHTMARE RANK</span>
+    </div>
+    <button class="menu-toggle" id="mobileRankToggle"><i class="fas fa-ghost"></i> <i class="fas fa-bars"></i></button>
+    <ul class="nav-links" id="rankNavMenu">
+      <li><a href="#" class="active" id="rankHomeLink"><i class="fas fa-trophy"></i> Hall of Terror</a></li>
+      <li><a href="#" id="futureLibraryLink"><i class="fas fa-book-dead"></i> Grimoire</a></li>
+      <li><a href="#" id="futureShrineLink"><i class="fas fa-skull"></i> Nightmare Altar</a></li>
+      <li><a href="#" id="futureBestiaryLink"><i class="fas fa-dragon"></i> Bestiary</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+  <div class="rank-header">
+    <h1><i class="fas fa-chart-line"></i> THE DREAD INDEX</h1>
+    <p>Community-driven ranking of classic survival horror games. Vote up or down — only the most terrifying titles ascend the nightmare throne.</p>
+  </div>
+
+  <div class="rank-controls">
+    <div class="sort-buttons" id="sortButtons">
+      <button class="sort-btn active" data-sort="score"><i class="fas fa-fire"></i> By Dread Score</button>
+      <button class="sort-btn" data-sort="title"><i class="fas fa-font"></i> By Title (A-Z)</button>
+      <button class="sort-btn" data-sort="year"><i class="fas fa-calendar-alt"></i> By Year (oldest)</button>
+    </div>
+    <button class="reset-rank" id="resetVotesBtn"><i class="fas fa-trash-alt"></i> Reset All Nightmares</button>
+  </div>
+
+  <div class="rank-grid" id="rankGridContainer">
+    <!-- dynamic ranking items will appear here -->
+  </div>
+</main>
+
+<footer>
+  <i class="fas fa-skull-crossbones"></i> Every vote shapes the terror hierarchy. Classic horror lives here. <br>
+  Nightmare Rank v1.0 — more cursed games added each blood moon.
+</footer>
+
+<script>
+  // ----- CLASSIC HORROR GAMES DATASET (with initial scores & votes) -----
+  let horrorGames = [
+    { id: 1, title: "Silent Hill 2", year: 2001, platform: "PS2", dreadScore: 98, votes: 1245, icon: "fa-disease" },
+    { id: 2, title: "Resident Evil", year: 1996, platform: "PS1", dreadScore: 94, votes: 1876, icon: "fa-virus" },
+    { id: 3, title: "Silent Hill", year: 1999, platform: "PS1", dreadScore: 96, votes: 1432, icon: "fa-fog" },
+    { id: 4, title: "Fatal Frame", year: 2001, platform: "PS2", dreadScore: 92, votes: 987, icon: "fa-camera" },
+    { id: 5, title: "Resident Evil 2", year: 1998, platform: "PS1", dreadScore: 95, votes: 2100, icon: "fa-biohazard" },
+    { id: 6, title: "Alone in the Dark", year: 1992, platform: "PC", dreadScore: 86, votes: 654, icon: "fa-candle" },
+    { id: 7, title: "Clock Tower", year: 1995, platform: "SNES", dreadScore: 88, votes: 723, icon: "fa-cut" },
+    { id: 8, title: "Rule of Rose", year: 2006, platform: "PS2", dreadScore: 85, votes: 612, icon: "fa-rose" },
+    { id: 9, title: "Eternal Darkness", year: 2002, platform: "GC", dreadScore: 90, votes: 891, icon: "fa-brain" },
+    { id: 10, title: "Siren", year: 2003, platform: "PS2", dreadScore: 89, votes: 745, icon: "fa-eye" },
+    { id: 11, title: "Parasite Eve", year: 1998, platform: "PS1", dreadScore: 87, votes: 982, icon: "fa-dna" },
+    { id: 12, title: "Dino Crisis", year: 1999, platform: "PS1", dreadScore: 84, votes: 1094, icon: "fa-dragon" }
+  ];
+
+  // Helper: Save to localStorage (optional but persistent rank)
+  function loadFromStorage() {
+    const stored = localStorage.getItem("nightmareRankData");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length) horrorGames = parsed;
+      } catch(e) { console.warn(e); }
+    }
+  }
+
+  function saveToStorage() {
+    localStorage.setItem("nightmareRankData", JSON.stringify(horrorGames));
+  }
+
+  // current sort state
+  let currentSort = "score"; // score, title, year
+
+  // render ranking items based on current sort
+  function renderRanking() {
+    const container = document.getElementById("rankGridContainer");
+    if (!container) return;
+
+    // clone array for sorting
+    let sorted = [...horrorGames];
+    if (currentSort === "score") {
+      sorted.sort((a,b) => b.dreadScore - a.dreadScore);
+    } else if (currentSort === "title") {
+      sorted.sort((a,b) => a.title.localeCompare(b.title));
+    } else if (currentSort === "year") {
+      sorted.sort((a,b) => a.year - b.year);
+    }
+
+    container.innerHTML = "";
+    sorted.forEach((game, idx) => {
+      const rankPosition = idx + 1;
+      let medalIcon = "";
+      if (rankPosition === 1) medalIcon = '<i class="fas fa-crown" style="color:#ffb347;"></i>';
+      else if (rankPosition === 2) medalIcon = '<i class="fas fa-medal" style="color:#c0c0c0;"></i>';
+      else if (rankPosition === 3) medalIcon = '<i class="fas fa-medal" style="color:#cd7f32;"></i>';
+      else medalIcon = '<i class="fas fa-skull"></i>';
+      
+      const rankItem = document.createElement("div");
+      rankItem.className = "rank-item";
+      rankItem.setAttribute("data-id", game.id);
+      rankItem.innerHTML = `
+        <div class="rank-number">${medalIcon} #${rankPosition}</div>
+        <div class="game-info">
+          <div class="game-name">
+            <i class="fas ${game.icon || 'fa-ghost'}"></i> ${game.title}
+          </div>
+          <div class="game-detail">
+            <span><i class="far fa-calendar-alt"></i> ${game.year}</span>
+            <span><i class="fas fa-microchip"></i> ${game.platform}</span>
+          </div>
+        </div>
+        <div class="score-area">
+          <div class="dread-score">${game.dreadScore} <span style="font-size:0.8rem;">🩸</span></div>
+          <div class="votes-count"><i class="fas fa-users"></i> ${game.votes} votes</div>
+        </div>
+        <div class="vote-buttons">
+          <button class="vote-btn up" data-id="${game.id}" data-direction="up"><i class="fas fa-arrow-up"></i></button>
+          <button class="vote-btn down" data-id="${game.id}" data-direction="down"><i class="fas fa-arrow-down"></i></button>
+        </div>
+      `;
+      container.appendChild(rankItem);
+    });
+
+    // attach event listeners to all vote buttons after render
+    document.querySelectorAll('.vote-btn.up').forEach(btn => {
+      btn.removeEventListener('click', handleVote);
+      btn.addEventListener('click', handleVote);
+    });
+    document.querySelectorAll('.vote-btn.down').forEach(btn => {
+      btn.removeEventListener('click', handleVote);
+      btn.addEventListener('click', handleVote);
+    });
+  }
+
+  // handle vote (upvote increases dreadScore by 1~3, downvote decreases)
+  function handleVote(event) {
+    const btn = event.currentTarget;
+    const gameId = parseInt(btn.getAttribute("data-id"));
+    const direction = btn.getAttribute("data-direction");
+    const gameIndex = horrorGames.findIndex(g => g.id === gameId);
+    if (gameIndex === -1) return;
+    
+    const game = horrorGames[gameIndex];
+    let delta = 0;
+    if (direction === "up") {
+      delta = Math.floor(Math.random() * 3) + 1; // +1 to +3 dread
+      game.dreadScore = Math.min(100, game.dreadScore + delta);
+      game.votes += 1;
+      showToast(`⬆️ +${delta} Dread! "${game.title}" becomes more terrifying.`);
+    } else if (direction === "down") {
+      delta = Math.floor(Math.random() * 3) + 1;
+      game.dreadScore = Math.max(0, game.dreadScore - delta);
+      game.votes += 1;
+      showToast(`⬇️ -${delta} Dread... "${game.title}" trembles in the crypt.`);
+    }
+    // update global array
+    horrorGames[gameIndex] = game;
+    saveToStorage();
+    renderRanking(); // re-render sorted ranking
+  }
+
+  // reset all votes and scores to original default (from hardcoded initial)
+  function resetAllRankings() {
+    const defaultGames = [
+      { id: 1, title: "Silent Hill 2", year: 2001, platform: "PS2", dreadScore: 98, votes: 1245, icon: "fa-disease" },
+      { id: 2, title: "Resident Evil", year: 1996, platform: "PS1", dreadScore: 94, votes: 1876, icon: "fa-virus" },
+      { id: 3, title: "Silent Hill", year: 1999, platform: "PS1", dreadScore: 96, votes: 1432, icon: "fa-fog" },
+      { id: 4, title: "Fatal Frame", year: 2001, platform: "PS2", dreadScore: 92, votes: 987, icon: "fa-camera" },
+      { id: 5, title: "Resident Evil 2", year: 1998, platform: "PS1", dreadScore: 95, votes: 2100, icon: "fa-biohazard" },
+      { id: 6, title: "Alone in the Dark", year: 1992, platform: "PC", dreadScore: 86, votes: 654, icon: "fa-candle" },
+      { id: 7, title: "Clock Tower", year: 1995, platform: "SNES", dreadScore: 88, votes: 723, icon: "fa-cut" },
+      { id: 8, title: "Rule of Rose", year: 2006, platform: "PS2", dreadScore: 85, votes: 612, icon: "fa-rose" },
+      { id: 9, title: "Eternal Darkness", year: 2002, platform: "GC", dreadScore: 90, votes: 891, icon: "fa-brain" },
+      { id: 10, title: "Siren", year: 2003, platform: "PS2", dreadScore: 89, votes: 745, icon: "fa-eye" },
+      { id: 11, title: "Parasite Eve", year: 1998, platform: "PS1", dreadScore: 87, votes: 982, icon: "fa-dna" },
+      { id: 12, title: "Dino Crisis", year: 1999, platform: "PS1", dreadScore: 84, votes: 1094, icon: "fa-dragon" }
+    ];
+    horrorGames = defaultGames.map(g => ({...g}));
+    saveToStorage();
+    renderRanking();
+    showToast("💀 The Nightmare Rank has been reset! Ancient terrors restored.");
+  }
+
+  // change sort type
+  function setSortType(type) {
+    currentSort = type;
+    // update active class on sort buttons
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+      const sortVal = btn.getAttribute('data-sort');
+      if (sortVal === type) btn.classList.add('active');
+      else btn.classList.remove('active');
+    });
+    renderRanking();
+  }
+
+  // toast helper
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast-message';
+    toast.innerHTML = `<i class="fas fa-skull"></i> ${message}`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = '0.4s';
+      setTimeout(() => toast.remove(), 500);
+    }, 2700);
+  }
+
+  // mobile navbar toggle
+  function initMobileMenu() {
+    const toggleBtn = document.getElementById('mobileRankToggle');
+    const navMenu = document.getElementById('rankNavMenu');
+    if (toggleBtn && navMenu) {
+      toggleBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+      });
+      // close on link click
+      document.querySelectorAll('#rankNavMenu a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          if (navMenu.classList.contains('active')) navMenu.classList.remove('active');
+          if (link.id !== 'rankHomeLink' && link.getAttribute('href') === '#') {
+            e.preventDefault();
+            showToast(`"${link.innerText.trim()}" — This cursed corridor is being prepared. More nightmares soon.`);
+          } else if (link.id === 'rankHomeLink') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      });
+    } else {
+      // fallback
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          if (link.id !== 'rankHomeLink' && link.getAttribute('href') === '#') {
+            e.preventDefault();
+            showToast(`"${link.innerText}" — Future update. The dread expands.`);
+          } else if (link.id === 'rankHomeLink') e.preventDefault();
+        });
+      });
+    }
+  }
+
+  // resize close mobile menu
+  window.addEventListener('resize', () => {
+    const navMenu = document.getElementById('rankNavMenu');
+    if (window.innerWidth > 780 && navMenu && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+    }
+  });
+
+  // Initialize everything
+  function init() {
+    loadFromStorage();
+    initMobileMenu();
+    renderRanking();
+    // attach sort listeners
+    document.querySelectorAll('.sort-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const sortType = btn.getAttribute('data-sort');
+        if (sortType) setSortType(sortType);
+      });
+    });
+    const resetBtn = document.getElementById('resetVotesBtn');
+    if (resetBtn) resetBtn.addEventListener('click', resetAllRankings);
+  }
+
+  init();
+</script>
+</body>
+</html>
