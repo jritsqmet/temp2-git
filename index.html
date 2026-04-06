@@ -352,7 +352,31 @@
         <!-- current active page (home) -->
         <li><a href="#" class="active" id="homeLink"><i class="fas fa-home"></i> Cursed Crypt</a></li>
         <!-- future pages: just uncomment or add more <li> items -->
- " onclick="showComingSoon()"><i class="fas fa-eye"></i> Unearth memory</button>
+        <li><a href="#" id="gamesLink"><i class="fas fa-ghost"></i> Tombs <span class="coming-soon-tag">soon</span></a></li>
+        <li><a href="rank.html" id="rankingLink"><i class="fas fa-trophy"></i> Nightmare Rank</a></li>
+        <li><a href="libreria.html" id="libraryLink"><i class="fas fa-book-dead"></i> Occult Library</a></li>
+        <!-- This navbar scales horizontally on desktop, collapses on mobile. Add more items easily -->
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <h1><i class="fas fa-dragon"></i> CLASSIC TERROR</h1>
+      <p>Relive the golden age of survival horror — where fear had no saves, corridors whispered secrets, and every shadow was alive.</p>
+    </div>
+
+    <section class="games-grid" id="gamesGrid">
+      <!-- Classic horror game cards (static but can be extended with JS/dynamic) -->
+      <div class="game-card">
+        <div class="card-img" style="background-image: linear-gradient(0deg, #000000aa, #00000066), url('https://placehold.co/600x400/1e0f0c/8b3a2a?text=Silent+Hill'); background-size: cover;">
+          <!-- retro pixel effect: just placeholder, but looks like a foggy town -->
+        </div>
+        <div class="card-content">
+          <div class="game-title">SILENT HILL</div>
+          <div class="game-year">1999 · PS1</div>
+          <div class="game-desc">Fog-drenched psychological horror where a father searches for his adopted daughter in a nightmarish town consumed by cults and guilt.</div>
+          <button class="btn-tomb" onclick="showComingSoon()"><i class="fas fa-eye"></i> Unearth memory</button>
         </div>
       </div>
       <div class="game-card">
